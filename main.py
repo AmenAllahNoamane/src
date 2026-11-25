@@ -5,6 +5,7 @@ def main():
     expression = input("Donner une expression reguliere : ")
 
     try:
+
         analyseur = AnalyseurSyntaxique(expression)
         automate = analyseur.analyser()
 
@@ -16,6 +17,11 @@ def main():
 
         for transition in automate.transitions:
             print(transition)
+
+        # Export Graphviz
+        automate.exporter_dot("automate.dot")
+
+        print("Fichier DOT genere avec succes")
 
     except (SyntaxError, ValueError) as e:
         print(e)

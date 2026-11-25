@@ -1,0 +1,10 @@
+digraph AFN {
+rankdir=LR;
+node [shape=circle];
+__start [shape=point];
+__start -> 0;
+3 [shape=doublecircle];
+0 -> 1 [label="a"];
+2 -> 3 [label="b"];
+1 -> 2 [label="ε"];
+}

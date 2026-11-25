@@ -1,4 +1,3 @@
-
 class Automate:
 
     def __init__(self, initial, final, transitions):
@@ -6,7 +5,47 @@ class Automate:
         self.final = final
         self.transitions = transitions
 
+    def exporter_dot(self, fichier):
 
+        groupes = {}
+
+        # Regrouper les transitions paralleles
+        for source, symbole, destination in self.transitions:
+
+            cle = (source, destination)
+
+            if cle not in groupes:
+                groupes[cle] = []
+
+            groupes[cle].append(symbole)
+
+        # Ouvrir le fichier
+        f = open(fichier, "w", encoding="utf-8")
+
+        f.write("digraph AFN {\n")
+        f.write("rankdir=LR;\n")
+        f.write("node [shape=circle];\n")
+
+        # Etat initial
+        f.write("__start [shape=point];\n")
+        f.write(f"__start -> {self.initial};\n")
+
+        # Etat final
+        f.write(f"{self.final} [shape=doublecircle];\n")
+
+        # Ecrire les transitions
+        for cle in groupes:
+
+            source = cle[0]
+            destination = cle[1]
+
+            etiquette = ",".join(groupes[cle])
+
+            f.write(f'{source} -> {destination} [label="{etiquette}"];\n')
+
+        f.write("}\n")
+
+        f.close()
 class Thompson:
 
     # Construction d'un symbole
